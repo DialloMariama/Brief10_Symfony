@@ -18,7 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class FormationUserController extends AbstractController
 {
-    #[IsGranted('ROLE_USER', message: 'Vous n\'avez pas les droits suffisants pour effectuer cette action')]
+    #[IsGranted('ROLE_CANDIDAT', message: 'Vous n\'avez pas les droits suffisants pour effectuer cette action')]
 
     #[Route('/api/candidature', name: 'candidature', methods: ['POST'])]
 
@@ -37,7 +37,7 @@ class FormationUserController extends AbstractController
         $data[] = [
             "id" => $candidatures->getId(),
             "nom" => $candidatures->getFormation()->getNom(),
-            "id user" => $candidatures->getUser()->getId(),
+            "nom user" => $candidatures->getUser()->getNomComplet(),
             "Email" => $candidatures->getUser()->getEmail(),
 
         ];

@@ -24,8 +24,12 @@ class FormationUser
     #[ORM\JoinColumn(nullable: false)]
     private ?Formation $formation = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $etat = null;
+    #[ORM\Column(length: 12)]
+    // private ?string $etat = null;
+
+    // #[ORM\Column(length: 20, options: ["default" => "en_attente"])]
+
+    private ?string $etat = 'en_attente';
 
     public function getId(): ?int
     {

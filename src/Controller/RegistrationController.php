@@ -21,7 +21,9 @@ class RegistrationController extends AbstractController
         $email = $decoded->email;
         $plaintextPassword = $decoded->password;
         $telephone = $decoded->telephone;
-        $roles = $decoded->roles;
+        $nomComplet = $decoded->nomComplet;
+
+        // $roles = $decoded->roles;
         $user = new User();
         $hashedPassword = $passwordHasher->hashPassword(
             $user,
@@ -32,7 +34,8 @@ class RegistrationController extends AbstractController
         $user->setEmail($email);
         $user->setUsername($email);
         $user->setTelephone($telephone);
-        $user->setroles($roles);
+        $user->setNomComplet($nomComplet);
+        $user->setRoles(["ROLE_CANDIDAT"]);
         $em->persist($user);
         $em->flush();
    

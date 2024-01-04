@@ -35,6 +35,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 9)]
     private ?string $telephone = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $nomComplet = null;
  
     public function getId(): ?int
     {
@@ -126,6 +129,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setTelephone(string $telephone): static
     {
         $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getNomComplet(): ?string
+    {
+        return $this->nomComplet;
+    }
+
+    public function setNomComplet(string $nomComplet): static
+    {
+        $this->nomComplet = $nomComplet;
 
         return $this;
     }
