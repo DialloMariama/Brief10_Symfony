@@ -47,7 +47,7 @@ class FormationUserController extends AbstractController
 
     #[IsGranted('ROLE_ADMIN', message: 'Vous n\'avez pas les droits suffisants pour effectuer cette action')]
 
-    #[Route('/api/FormationUser/refuser/{id}', name: 'refused_FormationUser', methods: ['PUT'])]
+    #[Route('/api/candidature/refuser/{id}', name: 'Candidature_Refusée', methods: ['PUT'])]
 
     public function refuser(FormationUser $candidature, EntityManagerInterface $em, SerializerInterface $sz): JsonResponse
     {
@@ -59,7 +59,7 @@ class FormationUserController extends AbstractController
 
     #[IsGranted('ROLE_ADMIN', message: 'Vous n\'avez pas les droits suffisants pour effectuer cette action')]
 
-    #[Route('/api/FormationUser/accepter/{id}', name: 'refused_FormationUser', methods: ['PUT'])]
+    #[Route('/api/candidature/accepter/{id}', name: 'Candidature_Acceptée', methods: ['PUT'])]
 
     public function accepter(FormationUser $candidature, EntityManagerInterface $em, SerializerInterface $sz): JsonResponse
     {
@@ -69,46 +69,46 @@ class FormationUserController extends AbstractController
         return new JsonResponse(['message' => 'La candidature a été acceptée'], JsonResponse::HTTP_OK);
     }
 
-    // #[IsGranted('ROLE_ADMIN', message: 'Vous n\'avez pas les droits suffisants pour effectuer cette action')]
-    // #[Route('/api/FormationUsers/accepter', name: 'FormationUser_accepted', methods: ['GET'])]
-    // public function getAcceptedFormationUsers(FormationUserRepository $FormationUserRepository, SerializerInterface $serializer): JsonResponse
-    // {
-    //     $acceptedFormationUsers = $FormationUserRepository->findBy(['etat' => 'accepter']);
+    #[IsGranted('ROLE_ADMIN', message: 'Vous n\'avez pas les droits suffisants pour effectuer cette action')]
+    #[Route('/api/candidature/accepter', name: 'Liste_Candidature_Acceptée', methods: ['GET'])]
+    public function listerCandidatureAccepter(FormationUserRepository $FormationUserRepository, SerializerInterface $serializer): JsonResponse
+    {
+        $accepterCandidature = $FormationUserRepository->findBy(['etat' => 'accepter']);
 
-    //     $data = [];
-    //     foreach ($acceptedFormationUsers as $candidature) {
-    //         $data[] = [
-    //             'id' => $candidature->getId(),
-    //             'user' => [
-    //                 'id' => $candidature->getUser()->getId(),
-    //             ],
-    //             'formation' => [
-    //                 'nom' => $candidature->getFormation()->getNom(),
-    //             ],
-    //             'etat' => $candidature->getEtat(),
-    //         ];
-    //     }
-    //     return new JsonResponse($serializer->serialize($data, 'json'), JsonResponse::HTTP_OK, [], true);
-    // }
+        $data = [];
+        foreach ($accepterCandidature as $candidature) {
+            $data[] = [
+                'id' => $candidature->getId(),
+                'user' => [
+                    'id' => $candidature->getUser()->getId(),
+                ],
+                'formation' => [
+                    'nom' => $candidature->getFormation()->getNom(),
+                ],
+                'etat' => $candidature->getEtat(),
+            ];
+        }
+        return new JsonResponse($serializer->serialize($data, 'json'), JsonResponse::HTTP_OK, [], true);
+    }
 
-    // #[IsGranted('ROLE_ADMIN', message: 'Vous n\'avez pas les droits suffisants pour effectuer cette action')]
-    // #[Route('/api/FormationUsers/refused', name: 'FormationUser_refused', methods: ['GET'])]
-    // public function getRefusedFormationUsers(FormationUserRepository $FormationUserRepository, SerializerInterface $serializer): JsonResponse
-    // {
-    //     $acceptedFormationUsers = $FormationUserRepository->findBy(['etat' => 'refuser']);
-    //     $data = [];
-    //     foreach ($acceptedFormationUsers as $candidature) {
-    //         $data[] = [
-    //             'id' => $candidature->getId(),
-    //             'user' => [
-    //                 'id' => $candidature->getUser()->getId(),
-    //             ],
-    //             'formation' => [
-    //                 'nom' => $candidature->getFormation()->getNom(),
-    //             ],
-    //             'etat' => $candidature->getEtat(),
-    //         ];
-    //     }
-    //     return new JsonResponse($serializer->serialize($data, 'json'), JsonResponse::HTTP_OK, [], true);
-    // }
+    #[IsGranted('ROLE_ADMIN', message: 'Vous n\'avez pas les droits suffisants pour effectuer cette action')]
+    #[Route('/api/candidature/refuser', name: 'Liste_Candidature_Refusée', methods: ['GET'])]
+    public function listerCandidatureRefuser(FormationUserRepository $FormationUserRepository, SerializerInterface $serializer): JsonResponse
+    {
+        $refuserCandidature = $FormationUserRepository->findBy(['etat' => 'refuser']);
+        $data = [];
+        foreach ($refuserCandidature as $candidature) {
+            $data[] = [
+                'id' => $candidature->getId(),
+                'user' => [
+                    'id' => $candidature->getUser()->getId(),
+                ],
+                'formation' => [
+                    'nom' => $candidature->getFormation()->getNom(),
+                ],
+                'etat' => $candidature->getEtat(),
+            ];
+        }
+        return new JsonResponse($serializer->serialize($data, 'json'), JsonResponse::HTTP_OK, [], true);
+    }
 }
