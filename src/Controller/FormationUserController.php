@@ -45,29 +45,29 @@ class FormationUserController extends AbstractController
 
     }
 
-    // #[IsGranted('ROLE_ADMIN', message: 'Vous n\'avez pas les droits suffisants pour effectuer cette action')]
+    #[IsGranted('ROLE_ADMIN', message: 'Vous n\'avez pas les droits suffisants pour effectuer cette action')]
 
-    // #[Route('/api/FormationUser/refuser/{id}', name: 'refused_FormationUser', methods: ['PUT'])]
+    #[Route('/api/FormationUser/refuser/{id}', name: 'refused_FormationUser', methods: ['PUT'])]
 
-    // public function refuser(FormationUser $candidature, EntityManagerInterface $em, SerializerInterface $sz): JsonResponse
-    // {
-    //     $candidature->setEtat("refuser");
+    public function refuser(FormationUser $candidature, EntityManagerInterface $em, SerializerInterface $sz): JsonResponse
+    {
+        $candidature->setEtat("refuser");
 
-    //     $em->flush();
-    //     return new JsonResponse(['message' => 'La candidature a été refusée'], JsonResponse::HTTP_OK);
-    // }
+        $em->flush();
+        return new JsonResponse(['message' => 'La candidature a été refusée'], JsonResponse::HTTP_OK);
+    }
 
-    // #[IsGranted('ROLE_ADMIN', message: 'Vous n\'avez pas les droits suffisants pour effectuer cette action')]
+    #[IsGranted('ROLE_ADMIN', message: 'Vous n\'avez pas les droits suffisants pour effectuer cette action')]
 
-    // #[Route('/api/FormationUser/accepter/{id}', name: 'refused_FormationUser', methods: ['PUT'])]
+    #[Route('/api/FormationUser/accepter/{id}', name: 'refused_FormationUser', methods: ['PUT'])]
 
-    // public function accepter(FormationUser $candidature, EntityManagerInterface $em, SerializerInterface $sz): JsonResponse
-    // {
-    //     $candidature->setEtat("accepter");
+    public function accepter(FormationUser $candidature, EntityManagerInterface $em, SerializerInterface $sz): JsonResponse
+    {
+        $candidature->setEtat("accepter");
 
-    //     $em->flush();
-    //     return new JsonResponse(['message' => 'La candidature a été acceptée'], JsonResponse::HTTP_OK);
-    // }
+        $em->flush();
+        return new JsonResponse(['message' => 'La candidature a été acceptée'], JsonResponse::HTTP_OK);
+    }
 
     // #[IsGranted('ROLE_ADMIN', message: 'Vous n\'avez pas les droits suffisants pour effectuer cette action')]
     // #[Route('/api/FormationUsers/accepter', name: 'FormationUser_accepted', methods: ['GET'])]
