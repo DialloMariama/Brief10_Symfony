@@ -19,7 +19,6 @@ class RegistrationController extends AbstractController
         $em = $doctrine->getManager();
         $decoded = json_decode($request->getContent());
         $email = $decoded->email;
-        $username = $decoded->username;
         $plaintextPassword = $decoded->password;
         $telephone = $decoded->telephone;
         $roles = $decoded->roles;
@@ -31,9 +30,9 @@ class RegistrationController extends AbstractController
 
         $user->setPassword($hashedPassword);
         $user->setEmail($email);
-        $user->setRoles($roles);
+        $user->setUsername($email);
         $user->setTelephone($telephone);
-        $user->setUsername($username);
+        $user->setroles($roles);
         $em->persist($user);
         $em->flush();
    

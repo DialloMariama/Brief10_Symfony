@@ -5,3 +5,7 @@ controllers:
     type: attribute
 api_login_check:
     path: /api/login_check
+
+api_formations:
+    path: '/api/formations'
+    controller: App\Controller\FormationController::class
