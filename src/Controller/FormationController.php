@@ -45,7 +45,10 @@ class FormationController extends AbstractController
         foreach($formations as $formation){
             $data[]=[
                 "id"=>$formation->getID(),
-                "nom"=>$formation->getNom()
+                "nom"=>$formation->getNom(),
+                "description"=>$formation->getDescription(),
+                "etat"=>$formation->getEtat(),
+                "duree"=>$formation->getDuree()
         ];
         }
         return new JsonResponse($serializer->serialize($data,'json'), JsonResponse::HTTP_OK, [], true);
@@ -59,7 +62,12 @@ class FormationController extends AbstractController
         $data=[];
         $data[]=[
             "id"=>$formation->getID(),
-            "nom"=>$formation->getNom()
+            "nom"=>$formation->getNom(),
+            "description"=>$formation->getDescription(),
+            "etat"=>$formation->getEtat(),
+            "duree"=>$formation->getDuree()
+
+
     ];
     
     return new JsonResponse($serializer->serialize($data,'json'), JsonResponse::HTTP_OK, [], true);
@@ -76,7 +84,7 @@ class FormationController extends AbstractController
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);
     }
     #[IsGranted('ROLE_ADMIN', message: 'Vous n\'avez pas les droits suffisants pour effectuer cette action')]
-    #[Route('/api/formations/update/{id}', name: "modifierFormation", methods: ['post'])]
+    #[Route('/api/formations/update/{id}', name: "modifierFormation", methods: ['update'])]
     public function update(Formation $formation, Request $req, ValidatorInterface $validator, SerializerInterface $serializer, EntityManagerInterface $em): JsonResponse
     {
         if ($formation) {
