@@ -28,11 +28,13 @@ class Formation
     #[Groups(["formation"])]
 
     private ?string $description = null;
+    #[ORM\Column(length: 255)]
+    private ?string $etat = null;
 
-    #[ORM\Column(length: 20, options: ["default" => "en_cours"])]
-    #[Groups(["formation"])]
+    // #[ORM\Column(length: 20, options: ["default" => "en_cours"])]
+    // #[Groups(["formation"])]
 
-    private ?string $etat = 'en_cours';
+    // private ?string $etat = 'en_cours';
 
     #[ORM\Column(length: 255)]
     #[Groups(["formation"])]
