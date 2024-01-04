@@ -65,37 +65,37 @@ class FormationController extends AbstractController
     return new JsonResponse($serializer->serialize($data,'json'), JsonResponse::HTTP_OK, [], true);
 
     }
-    //  #[IsGranted('ROLE_ADMIN', message: 'Vous n\'avez pas les droits suffisants pour effectuer cette action')]
-    // #[Route('/api/formations/delete/{id}', name: "deleteFormation", methods: ['post'])]
+     #[IsGranted('ROLE_ADMIN', message: 'Vous n\'avez pas les droits suffisants pour effectuer cette action')]
+    #[Route('/api/formations/delete/{id}', name: "deleteFormation", methods: ['delete'])]
 
-    // public function delete(Formation $formation, EntityManagerInterface $em): JsonResponse
-    // {
-    //     $em->remove($formation);
-    //     $em->flush();
+    public function delete(Formation $formation, EntityManagerInterface $em): JsonResponse
+    {
+        $em->remove($formation);
+        $em->flush();
 
-    //     return new JsonResponse(null, Response::HTTP_NO_CONTENT);
-    // }
-    // #[IsGranted('ROLE_ADMIN', message: 'Vous n\'avez pas les droits suffisants pour effectuer cette action')]
-    // #[Route('/api/formations/update/{id}', name: "modifierFormation", methods: ['post'])]
-    // public function update(Formation $formation, Request $req, ValidatorInterface $validator, SerializerInterface $serializer, EntityManagerInterface $em): JsonResponse
-    // {
-    //     if ($formation) {
-    //         $data = $serializer->deserialize(
-    //             $req->getContent(),
-    //             Formation::class,
-    //             'json',
-    //             [AbstractNormalizer::OBJECT_TO_POPULATE => $formation]
-    //         );
+        return new JsonResponse(null, Response::HTTP_NO_CONTENT);
+    }
+    #[IsGranted('ROLE_ADMIN', message: 'Vous n\'avez pas les droits suffisants pour effectuer cette action')]
+    #[Route('/api/formations/update/{id}', name: "modifierFormation", methods: ['post'])]
+    public function update(Formation $formation, Request $req, ValidatorInterface $validator, SerializerInterface $serializer, EntityManagerInterface $em): JsonResponse
+    {
+        if ($formation) {
+            $data = $serializer->deserialize(
+                $req->getContent(),
+                Formation::class,
+                'json',
+                [AbstractNormalizer::OBJECT_TO_POPULATE => $formation]
+            );
 
-    //         $errors = $validator->validate($data);
-    //         if ($errors->count() > 0) {
-    //             return new JsonResponse($serializer->serialize($errors, 'json'), JsonResponse::HTTP_BAD_REQUEST, [], true);
-    //         }
-    //         $em->persist($data);
-    //         $em->flush();
-    //         return new JsonResponse($serializer->serialize($data, 'json'), Response::HTTP_OK, ['accept' => 'json'], true);
-    //     } else {
-    //         return new JsonResponse("Cette formation n'existe pas.", Response::HTTP_NOT_FOUND);
-    //     }
-    // }
+            $errors = $validator->validate($data);
+            if ($errors->count() > 0) {
+                return new JsonResponse($serializer->serialize($errors, 'json'), JsonResponse::HTTP_BAD_REQUEST, [], true);
+            }
+            $em->persist($data);
+            $em->flush();
+            return new JsonResponse($serializer->serialize($data, 'json'), Response::HTTP_OK, ['accept' => 'json'], true);
+        } else {
+            return new JsonResponse("Cette formation n'existe pas.", Response::HTTP_NOT_FOUND);
+        }
+    }
 }
